@@ -3,6 +3,11 @@
 // Note that for this problem, the fibonacci sequence starts with [1, 1]. 
 
 // Time: O(2^n)
+//       4
+//     /   \
+//   2      2
+//  / \    / \
+// 1   1  1   1
 function fibsSum(n) {
   if (n === 0) return 0;
   if (n === 1) return 1;
@@ -11,3 +16,4 @@ function fibsSum(n) {
 }
 
 console.log(fibsSum(3));
+
