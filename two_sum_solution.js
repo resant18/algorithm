@@ -30,3 +30,28 @@ Array.prototype.twoSum = function() {
       hash[nums[i]] = i;
    }
 };
+
+// Solution 3: Time O(n log n), space: O(1)
+const twoSum = (arr, target) => {
+   arr.sort((num1, num2) => num1 - num2);
+
+   let min = 0;
+   let max = arr.length - 1;
+   let result = [];
+
+   while (min < max) {
+      if (min != 0 && arr[min] === arr[min - 1]) min++;
+
+      if (arr[min] + arr[max] < target) {
+         min++;
+      } else if (arr[min] + arr[max] > target) {
+         max--;
+      } else {
+         result.push([arr[min], arr[max]]);
+         min++;
+         max--;
+      }
+   }
+
+   return result;
+};

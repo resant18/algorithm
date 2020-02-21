@@ -17,8 +17,7 @@ const findDuplicates = (arr) => {
    }
 }
 
-// findDuplicates([1, 2, 3, 1, 3, 6, 6]);
-
+// Find the Duplicate using Temp
 const findDuplicates2 = arr => {
    temp = [];
    for (let i = 0; i < arr.length; i++) {
@@ -31,7 +30,39 @@ const findDuplicates2 = arr => {
    console.log(temp);
 };
 
-findDuplicates([1, 2, 3, 4, 3]);
-findDuplicates2([1, 2, 3, 4, 3]);
-findDuplicates([1, 2, 3, 1, 3, 6, 6]); //1, 3, 6
-findDuplicates2([1, 2, 3, 1, 3, 6, 6]); //1, 3, 6
+// findDuplicates([1, 2, 3, 4, 3]);
+// findDuplicates2([1, 2, 3, 4, 3]);
+// findDuplicates([1, 2, 3, 1, 3, 6, 6]); //1, 3, 6
+// findDuplicates2([1, 2, 3, 1, 3, 6, 6]); //1, 3, 6
+
+// Floyd’s cycle finding algorithm
+const findDuplicatesFloyd = arr => {
+   if (arr.length <= 1) {
+      return -1;
+   }
+
+   let slow = arr[0];
+   let fast = arr[slow];
+
+   console.log("slow=" + slow);
+   console.log("fast=" + fast);
+   while (slow != fast) {      
+      slow = arr[slow];      
+      fast = arr[arr[fast]];      
+      console.log('slow=' + slow);
+      console.log("fast=" + fast);
+   }
+
+   console.log('checking');
+   fast = 0;
+   while (slow != fast) {
+      slow = arr[slow];
+      fast = arr[fast];
+      console.log("slow=" + slow);
+      console.log("fast=" + fast);
+   }
+
+   return slow;
+}
+
+console.log(findDuplicatesFloyd([1, 3, 2, 1]));
