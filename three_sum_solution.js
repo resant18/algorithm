@@ -18,6 +18,7 @@ const threeSum = (nums, target) => {
 
    // Sort the array, depends on the machine, the time complexity could be n log(n)
    nums.sort( (a, b) => a - b); 
+   
    for (let i = 0; i < nums.length - 1; i++) {
       let min = i + 1;
       let max = nums.length - 1;      
