@@ -107,11 +107,33 @@ function pow(base, exponent) {
 //     1-dimensional array: ['some data']
 //     2-dimensional array: [['some data']]
 //     3-dimensional array: [[['some data']]]
-function flatten(data) {
-    if (!data instanceof Array) return data;
 
-    flatten()
+
+function flatten(data) {
+    let flattened = [];
+
+    for (el of data) {
+        if (el instanceof Array)
+            flattened = flattened.concat(flatten(el));
+        else 
+            flattened.push(el);
+    }    
+    return flattened;
 }
+
+function flatten2(data) {
+   if (!(data instanceof Array)) return [data];
+
+   let flattened = [];
+
+   for (el of data) {
+      flattened = flattened.concat(flatten2(el));
+   }
+   return flattened;
+}
+
+console.log(flatten2([1, 2, [3, [4, 5]]]));
+
 
 // Write a function, fileFinder(directories, targetFile), that accepts an object representing directories and a string respresenting a filename.
 // The function should return true, if the file is contained anywhere in the given directories.
@@ -119,43 +141,58 @@ function flatten(data) {
 // 
 // Example:
 //
-// let desktop = {
-//     '/images': {
-//         'app_academy_logo.svg': null,
-//         '/parks': {
-//             'yosemite.jpeg': null,
-//             'acadia.jpeg': null,
-//             'yellowstone.png': null
-//         },
-//         '/pets': {
-//             'trixie_lou.jpeg': null,
-//             'rolo.jpeg': null,
-//             'opal.jpeg': null,
-//             'diana.jpeg': null,
-//         }
-//     },
-//     '/music': {
-//         'hey_programmers.mp3': null,
-//         '/genres': {
-//             '/rock': {
-//                 'everlong.flac': null,
-//                 'livin_on_a_prayer.mp3': null
-//             },
-//             '/hip_hop': {
-//                 'express_yourself.wav': null,
-//                 'ny_state_of_mind.mp3': null
-//             }
-//         }
-//     }
-// };
+let desktop = {
+    '/images': {
+        'app_academy_logo.svg': null,
+        '/parks': {
+            'yosemite.jpeg': null,
+            'acadia.jpeg': null,
+            'yellowstone.png': null
+        },
+        '/pets': {
+            'trixie_lou.jpeg': null,
+            'rolo.jpeg': null,
+            'opal.jpeg': null,
+            'diana.jpeg': null,
+        }
+    },
+    '/music': {
+        'hey_programmers.mp3': null,
+        '/genres': {
+            '/rock': {
+                'everlong.flac': null,
+                'livin_on_a_prayer.mp3': null
+            },
+            '/hip_hop': {
+                'express_yourself.wav': null,
+                'ny_state_of_mind.mp3': null
+            }
+        }
+    }
+};
 //
 // fileFinder(desktop, 'app_academy_logo.svg');     // => true
 // fileFinder(desktop, 'everlong.flac');            // => true
 // fileFinder(desktop, 'sequoia.jpeg');             // => false
-function fileFinder(directories, targetFile) {
 
+let desktop = {
+   "/hip_hop": {
+      "express_yourself.wav": null,
+      "ny_state_of_mind.mp3": null
+   }
+};
+
+function fileFinder(directories, targetFile) {
+    for (let key in directories) {
+        if (key === targetFile || fileFinder(directories, targetFile)) {
+            return true;
+        }
+    }    
+
+    return false;
 }
 
+fileFinder(desktop, "ny_state_of_mind.mp3");
 
 // Write another function, pathFinder(directories, targetFile), that returns the path that contains the targetFile.
 // If the targetFile is not found in the directories, then return null.
@@ -167,7 +204,19 @@ function fileFinder(directories, targetFile) {
 // pathFinder(desktop, 'everlong.flac'));       // => '/music/genres/rock/everlong.flac'
 // pathFinder(desktop, 'honeybadger.png'));     // => null
 function pathFinder(directories, targetFile) {
+   for (let dirname in directories) {
+      // base case
+      if (dirname === targetFile) return "/" + dirname;
 
+      let path = pathFinder(directories[dirname], targetFile);
+
+      // if the target is not found in the path
+      if (path !== null) {
+         return dirname + path;
+      }
+   }
+
+   return null;
 }
 
 
