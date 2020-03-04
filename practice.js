@@ -1,18 +1,25 @@
 
 function pathFinder(directories, targetFile) {
+   if (directories === null) return null;
+
+   let path = null;
+
    for (let dirname in directories) {
       // base case
       if (dirname === targetFile) return "/" + dirname;
 
-      let path = pathFinder(directories[dirname], targetFile);
-
       // if the target is not found in the path
-      if (path !== null) {
-         return dirname + path;
+      childpath = pathFinder(directories[dirname], targetFile);
+
+      if (childpath !== null) {
+         path += dirname + childpath;
       }
+      
    }
 
-   return null;
+   return path;
+
+   // return null;
 }
 
 let desktop = {
