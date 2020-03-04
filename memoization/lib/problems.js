@@ -16,8 +16,13 @@
 // lucasNumber(3)   // => 4
 // lucasNumber(5)   // => 11
 // lucasNumber(9)   // => 76
-function lucasNumber(n) {
+function lucasNumber(n, memo = {}) {
+    if (n === 0) return 2;
+    if (n === 1) return 1;
 
+    if (n in memo) return memo[n];
+
+    return lucasNumber(n-1) + lucasNumber(n-2);
 }
 
 
