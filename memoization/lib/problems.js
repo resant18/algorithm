@@ -1,3 +1,5 @@
+// Run the test: npx mocha
+
 // Write a function, lucasNumber(n), that takes in a number.
 // The function should return the n-th number of the Lucas Sequence.
 // The 0-th number of the Lucas Sequence is 2.
@@ -16,13 +18,14 @@
 // lucasNumber(3)   // => 4
 // lucasNumber(5)   // => 11
 // lucasNumber(9)   // => 76
-function lucasNumber(n, memo = {}) {
+function lucasNumberMemo(n, memo = {}) {
+    if (n in memo) return memo[n];
+
     if (n === 0) return 2;
     if (n === 1) return 1;
 
-    if (n in memo) return memo[n];
-
-    return lucasNumber(n-1) + lucasNumber(n-2);
+    memo[n] = lucasNumberMemo(n-1, memo) + lucasNumberMemo(n-2,memo);
+    return memo[n];
 }
 
 
@@ -37,8 +40,12 @@ function lucasNumber(n, memo = {}) {
 // sumArray([5])            // => 5
 // sumArray([5, 2])         // => 7
 // sumArray([4, 10, -1, 2]) // => 15
-function sumArray(array) {
-
+function sumArray(array, memo = {}) {
+    if (array in memo) return memo[array];
+    if (array.length === 0) return 0;
+    
+    memo[array] = array.shift() + sumArray(array, memo);
+    return memo[array];
 }
 
 
@@ -53,10 +60,12 @@ function sumArray(array) {
 // reverseString("c")           // => "c"
 // reverseString("internet")    // => "tenretni"
 // reverseString("friends")     // => "sdneirf"
-function reverseString(str) {
+function reverseString(str, memo = {}) {    
+    if (str in memo) return memo[str];
 
+    memo[str] = (str === "") ? "" : reverseString(str.slice(1), memo) + str[0];
+    return memo[str];
 }
-
 
 // Write a function, pow(base, exponent), that takes in two numbers.
 // The function should calculate the base raised to the exponent power.
@@ -74,8 +83,16 @@ function reverseString(str) {
 // pow(2, 5)    // => 32
 // pow(3, 4)    // => 81
 // pow(2, -5)   // => 0.03125
-function pow(base, exponent) {
+function pow(base, exponent, memo = {}) {
+    if (exponent in memo) return memo[exponent];
+    if (exponent === 0) return 1;    
 
+    if (exponent > 0) {
+        memo[exponent] = base * pow(base, exponent - 1);
+    } else {
+        memo[exponent] = 1/base * pow(base, exponent + 1);
+    }
+    return memo[exponent];
 }
 
 
@@ -107,8 +124,21 @@ function pow(base, exponent) {
 //     1-dimensional array: ['some data']
 //     2-dimensional array: [['some data']]
 //     3-dimensional array: [[['some data']]]
-function flatten(data) {
+function flatten(data, memo = {}) {
+    let flattened = [];
 
+    if (data in memo) return memo[data];
+
+    for (let el of data) {
+        if (el instanceof Array) {
+            flattened = flattened.concat(flatten(el));
+        } else {
+            flattened.push(el);
+        }
+        memo[el] = flattened;
+    } 
+
+    return flattened;
 }
 
 // Write a function, fileFinder(directories, targetFile), that accepts an object representing directories and a string respresenting a filename.
@@ -150,8 +180,13 @@ function flatten(data) {
 // fileFinder(desktop, 'app_academy_logo.svg');     // => true
 // fileFinder(desktop, 'everlong.flac');            // => true
 // fileFinder(desktop, 'sequoia.jpeg');             // => false
-function fileFinder(directories, targetFile) {
-
+function fileFinder(directories, targetFile, memo = {}) {
+    for (key in directories) {
+        memo[key] = (key === targetFile || fileFinder(directories[key], targetFile, memo));
+        if (memo[key]) return true;
+    }
+    
+    return false;
 }
 
 
@@ -164,17 +199,65 @@ function fileFinder(directories, targetFile) {
 // pathFinder(desktop, 'trixie_lou.jpeg'));     // => '/images/pets/trixie_lou.jpeg'
 // pathFinder(desktop, 'everlong.flac'));       // => '/music/genres/rock/everlong.flac'
 // pathFinder(desktop, 'honeybadger.png'));     // => null
-function pathFinder(directories, targetFile) {
+function pathFinder(directories, targetFile, memo = {}) {
+    
+    for (let dirName in directories) {
+        if (dirName === targetFile) {
+            memo[dirName] = "/" + dirName;
+            return memo[dirName];
+        }
 
+        let path = pathFinder(directories[dirName], targetFile, memo);
+
+        if (path) {
+            memo[dirName] = dirName + path;
+            return memo[dirName];
+        }
+
+    }
+
+    return null;
+}
+
+// Write a function minChange(coins, amount) that accepts an array of coin values 
+// and a target of amount as arguments. The method should the minimum number of coins needed
+// to make the target amount. A coin value can be used multiple times.
+
+// After you pass the first 3 examples, you'll likely need to memoize your code
+// in order to pass the 4th example in a decent runtime.
+
+// Examples:
+//
+// minChange([1, 2, 5], 11)         // => 3, because 5 + 5 + 1 = 11
+// minChange([1, 4, 5], 8)          // => 2, because 4 + 4 = 8
+// minChange([1, 5, 10, 25], 15)    // => 2, because 10 + 5 = 15
+// minChange([1, 5, 10, 25], 100)   // => 4, because 25 + 25 + 25 + 25 = 100
+
+function minChange(coins, amount, memo = {}) {
+   // console.log(amount);
+   if (amount in memo) return memo[amount];
+   if (amount === 0) return 0;
+
+   let minCoins = [];
+   for (let coin of coins) {
+      // console.log(coin);
+      if (amount >= coin) {
+         memo[amount] = minChange(coins, amount - coin, memo) + 1;
+         minCoins.push(memo[amount]);
+      }
+   }
+
+   return Math.min(...minCoins);
 }
 
 
 module.exports = {
-    lucasNumber,
+    lucasNumberMemo,
     sumArray,
     reverseString,
     pow,
     flatten,
     fileFinder,
-    pathFinder
+    pathFinder,
+    minChange
 };
