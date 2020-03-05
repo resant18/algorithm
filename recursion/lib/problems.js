@@ -184,7 +184,7 @@ let desktop = {
 
 function fileFinder(directories, targetFile) {
     for (let key in directories) {
-        if (key === targetFile || fileFinder(directories, targetFile)) {
+        if (key === targetFile || fileFinder(directories[key], targetFile)) {
             return true;
         }
     }    
