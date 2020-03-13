@@ -7,6 +7,8 @@
 //   b     c
 // /  \     \
 // d   e      f
+//           /
+//          g
 
 class Node {
    constructor(val) {
@@ -22,12 +24,14 @@ let c = new Node("c");
 let d = new Node("d");
 let e = new Node("e");
 let f = new Node("f");
+let g = new Node("g");
 
 a.left = b;
 a.right = c;
 b.left = d;
 b.right = e;
 c.right = f;
+f.left = g;
 
 // Method 1: Iteration
 const depthFirstSearch = (root, target) => {
@@ -67,4 +71,17 @@ const depthFirstSearch2 = (root, target) => {
    return false;
 }
 
-console.log(depthFirstSearch2(a, "c"));
+// console.log(depthFirstSearch2(a, "c"));
+
+node3 = new Node(3);
+node9 = new Node(9);
+node20 = new Node(20);
+node15 = new Node(15);
+node7 = new Node(7);
+
+node3.left = node9;
+node3.right = node20;
+node20.left = node15;
+node20.right = node7;
+
+
