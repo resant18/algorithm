@@ -17,27 +17,38 @@
 // Explanation: The answer is "wke", with the length of 3. 
 //              Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
 
+// Edge case: 
+// - all lowercase -> longest possible distinct substr would be 26 chars
+// brute force: find all substr (nested loop = O(n^2) and then check if each substr is distinct O(n) => O(n^2) x O(n) = O(n^3)
+// Space complexity: O(n)
+
+// "abcabcabc"
+
+// Approach: Sliding window
+// Iterate array with 2 pointer left & right with condition:
+// - Increment right pointer until the char is seen before
+// - When the right pointer has been seen before, increment the left pointer
 
 var lengthOfLongestSubstring = function(s) {
-   let uniqueSubstr = "";
-   let max = 0;
-   for (let i = 0; i < s.length - 1; i++) {
-      uniqueSubstr = s[i];
-      for (let j = i + 1; j < s.length; j++) {
-         if (uniqueSubstr.includes(s[j])) {
-            if (uniqueSubstr.length > max) {
-               max = uniqueSubstr.length;
-            }
-            uniqueSubstr = "";
-            break;
-         } else {            
-            uniqueSubstr += s[j];
-         }
-      }      
-   }   
+   let seen = {};
 
-   
-   return uniqueSubstr.length > max ? uniqueSubstr.length : max;
+   let left = 0;
+   let right = 0;
+   let maxLength = 0;
+
+   while (right < s.length) {
+      if (seen[s[right]]) {
+         maxLength = Math.max(maxLength, right - left);
+         delete seen[s[left]];
+         left++;
+         continue;
+      } else {
+         seen[s[right]] = 1;
+         right++;
+      }
+   }
+   maxLength = Math.max(maxLength, right - left);
+   return maxLength;
 };
 
-console.log(lengthOfLongestSubstring("bwf"));
+console.log(lengthOfLongestSubstring("abcabcabc"));
