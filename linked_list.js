@@ -10,19 +10,34 @@ class LinkedList {
       this.head = null; 
    }
 
+   // insert node at tail recursively
    insertNode(head, data) {
       if (head === null) return new Node(data);
       head.next = this.insertNode(head.next, data);
       return head;
    }
 
+   // insert node at tail iteratively
+   // insertNode(nodeData) {
+   //    if (nodeData === null) {
+   //       this.head = nodeData;
+   //    }
+   //    else {
+   //       this.tail.next = nodeData;
+   //    }
+   //    this.tail = nodeData;
+   // }
+
    displayData(node) {
-      while (node) {
+      while (node) {         
          console.log(node.val);
+         
          node = node.next;         
       }
+      console.log("-----------");
    }
 
+   // O(1) operation
    deleteNode(node) {
       node.val = node.next.val;
       node.next = node.next.next;
@@ -32,48 +47,145 @@ class LinkedList {
    // [], [1], [1, 1], [1, 2, 1], [2, 1, 1], [2, 1, 3, 1], [1, 2, 1, 3, 1]
    deleteNode(head, val) {
       let prevNode = null;
-      let currentNode = head;
+      let currNode = head;
 
-      while (currentNode) {
-         if (currentNode.val === val) {
+      while (currNode) {
+         if (currNode.val === val) {
             // if this current node is a head (prev is null)
             if (prevNode === null) {
-                  head = currentNode.next;
+                  head = currNode.next;
             } 
             // connect valid previous node (that is not equal the val)
             // to the next next node
             else {
-                  prevNode.next = currentNode.next;
+                  prevNode.next = currNode.next;
             }
          }
          else {
             // it has to be inside the else, because we only need to store prev node
-            // that is valid (not equl val)
-            prevNode = currentNode;
+            // that is valid (not equal val)
+            prevNode = currNode;
          }
-         currentNode = currentNode.next;
+         currNode = currNode.next;
       }
       return head;
    }
+
+   reverseList(head) {
+      let prevNode = null;
+      let currNode = head;
+      let nextNode;
+
+      while (currNode) {
+         nextNode = currNode.next;
+         
+         currNode.next = prevNode;
+         
+         prevNode = currNode;
+         currNode = nextNode;
+      }
+      return prevNode;
+   }
+
+   // Leetcode solution explanation:
+   // The recursive version is slightly trickier and the key is to work backwards. 
+   // Assume that the rest of the list had already been reversed, now how do I reverse the front part? 
+   // Let's assume the list is: n1 → … → nk-1 → nk → nk+1 → … → nm → Ø
+   // Assume from node nk+1 to nm had been reversed and you are at node nk.
+   // n1 → … → nk-1 → nk → nk+1 ← … ← nm
+   // We want nk+1’s next node to point to nk.
+   // So,
+   // nk.next.next = nk;
+   // Be very careful that n1's next must point to Ø. If you forget about this, your linked list has a cycle in it. 
+   // This bug could be caught if you test your code with a linked list of size 2.
+
+   reverseRecursive(head) {
+      // base case head === null for a linked list that just have one item
+      if (head === null || head.next === null) return head;
+      
+      let reversed = this.reverseRecursive(head.next);
+      // assume the rest of list is succesfully reversed
+      // the next of head.next item (head.next.next) is linked to head (current)
+      head.next.next = head;
+      // for the head, the next is linked to null
+      head.next = null;
+      return reversed;
+   }
+
+   reverseBetween(head, m, n) {
+      let pos = 1;
+      let prevNode = null;
+      let curNode = head;
+      let nextNode;
+      let newHead = null, newTail = null;
+      let startNode, endNode;
+      let stack;
+      
+      while (pos <= n) {
+         if (pos === m - 1) newHead = curNode;               
+         if (pos === n) {
+               endNode = curNode;
+               newTail = curNode.next;               
+         }        
+         if (pos === m) {
+               startNode = curNode;
+               continue;
+         }
+         
+         nextNode = curNode.next;
+         if (pos >= m && pos <= n) {            
+               curNode.next = prevNode;            
+         }
+         prevNode = curNode;                
+         curNode = curNode.next;
+         pos++;
+      }
+      
+      newHead.next = endNode;
+      startNode.next = newTail;   
+      if (m === 1) {
+         return endNode;
+      }
+      else {
+         return head;   
+      }         
+   };
 }
 
 function main() {
    let n1 = new Node(1);
-   let n2 = new Node(1);
-   // let n3 = new Node(1);
+   let n2 = new Node(2);
+   let n3 = new Node(3);
+   let n4 = new Node(4);
+   let n5 = new Node(5);
 
    n1.next = n2;
-   // n2.next = n3;
+   n2.next = n3;
+   n3.next = n4;
+   n4.next = n5;   
 
    // let elements = [n1, n2];
    let llist = new LinkedList();
+   // let llist_head;
    llist.head = n1;
+
    // for (let el of elements) {    
-   //    const llist_head = llist.insertNode(llist.head, el);   
+   //    llist_head = llist.insertNode(llist.head, el);   
    //    llist.head = llist_head;
    // }
-   llist_head = llist.deleteNode(llist.head, 1);
-   llist.displayData(llist_head);
+   // llist_head = llist.deleteNode(llist.head, 2);
+   // llist.displayData(llist_head);
+
+   // llist.insertNode(llist_head, n2);
+   llist.displayData(llist.head);
+   // console.log(n1);
+
+   // llist_head = llist.reverseList(llist.head);
+   let reversedList = llist.reverseRecursive(llist.head);
+   llist.displayData(reversedList);
+   
+   let newHead = reverseBetween(llist.head, 2, 4);
+   llist.displayData(newHead);
 }
 
 main();
