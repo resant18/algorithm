@@ -30,4 +30,14 @@ const reverseInteger = num => {
    return result < -Math.pow(2, 31) || result > Math.pow(2, 31) ? 0 : result;
 };
 
-console.log(reverseInteger(-123));
+// console.log(reverseInteger(-123));
+// 123
+const reverseIntegerRecursive = (num, result = 0) => {
+   if (num === 0) return result < -Math.pow(2, 31) || result > Math.pow(2, 31) ? 0 : result;
+
+   result = result * 10 + (num % 10);   // 3 -> 30+2 = 32 -> 320 + 1 = 321
+   num = parseInt(num / 10); 
+   return reverseIntegerRecursive(num, result); //(12, 3) -> (1, 32) -> (0, 321)
+}
+
+console.log(reverseIntegerRecursive(123));
