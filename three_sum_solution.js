@@ -23,6 +23,7 @@ const threeSum = (nums, target) => {
       let min = i + 1;
       let max = nums.length - 1;      
 
+      // check if the first two numbers are duplicate
       if (i != 0 && nums[i] === nums[i-1]) continue;
       while (min < max) {
          if (nums[min] + nums[i] + nums[max] < target) min++;
@@ -31,11 +32,14 @@ const threeSum = (nums, target) => {
             let triplet = [nums[i], nums[min], nums[max]];
             result.push(triplet);
             max--;
-            while (min < max && nums[min] === nums[min-1]) min++; 
+            // check if any numbers are duplicate, keep find the next number that is different
+            while (min < max && nums[max] === nums[max+1]) max--; 
          }
       }
    }
    return result;
 }
 
-console.log(threeSum([-1, 0, 3, 4, -1, -5]));
+// -5 -2 1 1 3 5 5 5
+
+console.log(threeSum([5, 5, 3, 5, 1, -5, 1, -2], 3));
