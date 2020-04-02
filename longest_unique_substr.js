@@ -25,9 +25,14 @@
 // "abcabcabc"
 
 // Approach: Sliding window
-// Iterate array with 2 pointer left & right with condition:
-// - Increment right pointer until the char is seen before
-// - When the right pointer has been seen before, increment the left pointer
+// Iterate the whole array  
+// Set 2 pointer left & right with condition:
+// - Increment right pointer until the char is seen before, 
+//   - When a char is seen before:
+//     - Delete the char where the left pointer pointed to and increment left pointer
+//   - When the char is first seen:
+//     - Save it in hash table and increase right pointer
+
 
 var lengthOfLongestSubstring = function(s) {
    let seen = {};
