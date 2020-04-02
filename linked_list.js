@@ -7,7 +7,7 @@ class Node {
 
 class LinkedList {
    constructor() {
-      this.head = null; 
+      this.head = null;
    }
 
    // insert node at tail recursively
@@ -29,10 +29,10 @@ class LinkedList {
    // }
 
    displayData(node) {
-      while (node) {         
+      while (node) {
          console.log(node.val);
-         
-         node = node.next;         
+
+         node = node.next;
       }
       console.log("-----------");
    }
@@ -53,15 +53,14 @@ class LinkedList {
          if (currNode.val === val) {
             // if this current node is a head (prev is null)
             if (prevNode === null) {
-                  head = currNode.next;
-            } 
+               head = currNode.next;
+            }
             // connect valid previous node (that is not equal the val)
             // to the next next node
             else {
-                  prevNode.next = currNode.next;
+               prevNode.next = currNode.next;
             }
-         }
-         else {
+         } else {
             // it has to be inside the else, because we only need to store prev node
             // that is valid (not equal val)
             prevNode = currNode;
@@ -78,9 +77,9 @@ class LinkedList {
 
       while (currNode) {
          nextNode = currNode.next;
-         
+
          currNode.next = prevNode;
-         
+
          prevNode = currNode;
          currNode = nextNode;
       }
@@ -88,21 +87,21 @@ class LinkedList {
    }
 
    // Leetcode solution explanation:
-   // The recursive version is slightly trickier and the key is to work backwards. 
-   // Assume that the rest of the list had already been reversed, now how do I reverse the front part? 
+   // The recursive version is slightly trickier and the key is to work backwards.
+   // Assume that the rest of the list had already been reversed, now how do I reverse the front part?
    // Let's assume the list is: n1 → … → nk-1 → nk → nk+1 → … → nm → Ø
    // Assume from node nk+1 to nm had been reversed and you are at node nk.
    // n1 → … → nk-1 → nk → nk+1 ← … ← nm
    // We want nk+1’s next node to point to nk.
    // So,
    // nk.next.next = nk;
-   // Be very careful that n1's next must point to Ø. If you forget about this, your linked list has a cycle in it. 
+   // Be very careful that n1's next must point to Ø. If you forget about this, your linked list has a cycle in it.
    // This bug could be caught if you test your code with a linked list of size 2.
 
    reverseRecursive(head) {
       // base case head === null for a linked list that just have one item
       if (head === null || head.next === null) return head;
-      
+
       let reversed = this.reverseRecursive(head.next);
       // assume the rest of list is succesfully reversed
       // the next of head.next item (head.next.next) is linked to head (current)
@@ -113,43 +112,57 @@ class LinkedList {
    }
 
    reverseBetween(head, m, n) {
-      let pos = 1;
-      let prevNode = null;
-      let curNode = head;
-      let nextNode;
-      let newHead = null, newTail = null;
-      let startNode, endNode;
-      let stack;
-      
-      while (pos <= n) {
-         if (pos === m - 1) newHead = curNode;               
-         if (pos === n) {
-               endNode = curNode;
-               newTail = curNode.next;               
-         }        
-         if (pos === m) {
-               startNode = curNode;
-               continue;
-         }
-         
-         nextNode = curNode.next;
-         if (pos >= m && pos <= n) {            
-               curNode.next = prevNode;            
-         }
-         prevNode = curNode;                
-         curNode = curNode.next;
-         pos++;
+      if (head == null) {
+         return null;
       }
       
-      newHead.next = endNode;
-      startNode.next = newTail;   
-      if (m === 1) {
-         return endNode;
+      // set a prev pointer with next point to head. This pointer will be used to iterate
+      let prev = { next: head };
+    
+      // set a pointer that hold next point to head
+      let beforeHead = prev;
+
+      // Move prev pointer until it reach a node before m position (m - 1 posiiton)
+      while (--m) {
+         prev = prev.next;         
+         --n;
       }
-      else {
-         return head;   
-      }         
-   };
+
+      // set current pointer
+      let curr = prev.next;
+
+      // The two pointers that will fix the final connections.
+      let newHead = prev, newTail = curr;      
+
+      // Iteratively reverse the nodes until the current pointer reach m + 1 position
+      let temp = null;
+      while (n--) {
+         temp = curr.next; // save the last node
+         curr.next = prev; // reverse the connection
+         prev = curr; // move 2 pointers starting from prev first
+         curr = temp;
+
+         // Important Note!
+         // temp = curr.next.next;   
+         // 'curr.next.next = curr;' is wrong, because it doesn't mean (curr.next).next = curr, 
+         // but curr.next.next could refer the object itself, which is temp and temp is set to curr make it circular. 
+         // So, we need prev pointer still;        
+         // curr.next.next = curr;   
+         // curr = curr.next;                 
+      }       
+
+      // Adjust the final connections as explained in the algorithm
+      // if (newHead != null) {
+         newHead.next = prev;
+      // } else {
+      //    head = prev;
+      // }
+      
+      newTail.next = curr;
+      // return head;
+      return beforeHead.next;
+
+   }
 }
 
 function main() {
@@ -177,14 +190,14 @@ function main() {
    // llist.displayData(llist_head);
 
    // llist.insertNode(llist_head, n2);
-   llist.displayData(llist.head);
+   // llist.displayData(llist.head);
    // console.log(n1);
 
    // llist_head = llist.reverseList(llist.head);
-   let reversedList = llist.reverseRecursive(llist.head);
-   llist.displayData(reversedList);
+   // let reversedList = llist.reverseRecursive(llist.head);
+   // llist.displayData(reversedList);
    
-   let newHead = reverseBetween(llist.head, 2, 4);
+   let newHead = llist.reverseBetween(llist.head, 2, 4);
    llist.displayData(newHead);
 }
 
