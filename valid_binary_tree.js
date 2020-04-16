@@ -38,8 +38,12 @@ Pseudocode:
 var DFS = function (root, min, max) {
    if (root === null) return true;
    // console.log(min + " < " + root.val + " < " + max + " => " + (root.val >= min && root.val <= max));
+   // if the current root valu is out of range, return false
    if ((min !== null && root.val <= min) || (max !== null && root.val >= max)) return false;
 
+   // DFS with defined min & max.
+   // Any left node must less that root val => max = root.val 
+   // Any right node must more that root val => min = root.val 
    return DFS(root.left, min, root.val) && DFS(root.right, root.val, max);
 };
 
