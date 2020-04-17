@@ -1,3 +1,4 @@
+// LeetCode #938
 // Range Sum of BST
 // Level: Easy
 
@@ -22,20 +23,35 @@ function TreeNode(val) {
 let n1 = new TreeNode(10);
 let n2 = new TreeNode(5);
 let n3 = new TreeNode(15);
+let n4 = new TreeNode(3);
+let n5 = new TreeNode(7);
+let n6 = new TreeNode(18);
 
 n1.left = n2;
 n1.right = n3;
+n2.left = n4;
+n2.right = n5;
+n3.right = n6;
 
-//   10
-//  / \
-// 5  15
 
-// 10, 15
+//      10
+//     / \
+//    5   15
+//   / \    \
+//  3   7   18
+
+// Result: 7 + 10 + 15 = 32   
+// Traverse: 10 => 5 => 7 
 var rangeSumBST = function(root, L, R) {
    if (!root) return 0;
 
+   // We don't need to visit all nodes, because the number in order, we can traverse based on L, R value
+   // To locate where L is, we need to compare L and root. If L < root, go to left
    let left = root.val > L.val ? rangeSumBST(root.left, L, R) : 0;
+   // To locate where R is, we need to compare R and root. If R > root, go to right
    let right = root.val < R.val ? rangeSumBST(root.right, L, R) : 0;
+
+   // check if value is in the given range
    let curr = root.val >= L.val && root.val <= R.val ? root.val : 0;
 
    return left + right + curr;
