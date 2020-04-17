@@ -34,7 +34,7 @@ const minSubArrayLen = function(s, nums) {
    return len > nums.length ? 0 : len;
 }
 
-console.log(minSubArrayLen(15, [1, 2, 3, 4, 5]));
+console.log(minSubArrayLen(5, [1, 1, 1, 2, 5]));
 
 // maximum-size-subarray-sum-equals-k
 // 718. Maximum Length of Repeated Subarray
