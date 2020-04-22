@@ -18,6 +18,8 @@
 //   [-2,  0, 0, 2]
 // ]
 
+// Time: O(n^3)
+// Space: O(n)
 var fourSum = function(nums, target) {
     let result = [];
     
@@ -46,3 +48,45 @@ var fourSum = function(nums, target) {
     
     return result;
 };
+
+var fourSum2 = function(nums, target) {
+    let result = [];
+    let firstPairSum = {};
+
+    for (let i = 0; i < nums.length; i++) {
+        for (let j = i + 1; j < nums.length; j++) {
+            let sum = nums[i] + nums[j];
+            firstPairSum[sum] = {i, j};
+            // if (
+            //    firstPairSum[sum] &&
+            //    firstPairSum[sum][0] != sum[i] &&
+            //    firstPairSum[sum][1] != sum[j] &&
+            //    firstPairSum[sum][0] != sum[j] &&
+            //    firstPairSum[sum][1] != sum[i]
+            // ) {
+            //    console.log(nums[i] + " + " + nums[j]);
+            //    firstPairSum[sum].push([nums[i], nums[j]]);
+            // } else {
+            //    firstPairSum[sum] = [[nums[i], nums[j]]];
+            // }
+        }
+    }
+
+    console.log(firstPairSum);
+    for (let i = 0; i < nums.length; i++) {
+        for (let j = i + 1; j < nums.length - 1; j++) {
+            let sum1 = nums[i] + nums[j];
+            let sum2 = 0 - sum1;
+            if (firstPairSum[sum2]) {
+                if (firstPairSum[sum2].i != i && firstPairSum[sum2].j != j &&
+                    firstPairSum[sum2].i != j && firstPairSum[sum2].j != i) {
+                        result.push([nums[i], nums[j], nums[firstPairSum[sum2].i], nums[firstPairSum[sum2].j]]);
+                    }
+            }
+        }
+    }
+
+    return result;
+}
+
+console.log(fourSum2([1, 0, -1, 0, -2, 2], 0));
