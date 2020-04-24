@@ -219,8 +219,10 @@ function pathFinder(directories, targetFile, memo = {}) {
     return null;
 }
 
+// Leetcode #322: Coin Change
+// Level: Medium
 // Write a function minChange(coins, amount) that accepts an array of coin values 
-// and a target of amount as arguments. The method should the minimum number of coins needed
+// and a target of amount as arguments. The method should the **MINIMUM NUMBER OF COINS NEEDED**
 // to make the target amount. A coin value can be used multiple times.
 
 // After you pass the first 3 examples, you'll likely need to memoize your code
@@ -246,9 +248,26 @@ function minChange(coins, amount, memo = {}) {
          minCoins.push(memo[amount]);
       }
    }
-
+      
    return Math.min(...minCoins);
 }
+
+// Tabulation
+// 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
+// function minChangeTab(coins, amount) {
+//     let table = new Array(amount).fill(amount + 1);
+//     table[0] = 0;
+
+//     for (let subAmount = 0; subAmount < amount; subAmount++) {
+//         for (let coin of coins) {
+//             if (coin >= subAmount) {
+//                 table[subAmount - coin] = Math.min(table[i], table[subAmount - coin] + 1);
+//             }
+//         }
+//     }
+
+//     return table[table.length - 1];
+// }
 
 
 module.exports = {
