@@ -2,5 +2,13 @@
 // Feel free to use this file for scratch work.
 
 function climbStairs(n) {
+   let table = new Array(n + 1).fill(0);
+   table[0] = 1;
+   table[1] = 1;
 
+   for (let stair = 2; stair <= n; stair++) {
+      table[stair] = table[stair - 1] + table[stair - 2];
+   }
+
+   return table[table.length - 1];
 }
