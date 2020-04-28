@@ -9,7 +9,7 @@
 // 0*5 /  1*5|   \2*5
 //    11     6     1
 // etc    
-function minChangeMemo(coins, amount, memo = {}) {  
+function change(coins, amount, memo = {}) {  
    let key = amount + "-" + coins;
    if (key in memo) return memo[key];
    if (amount === 0) return 1;
@@ -17,7 +17,7 @@ function minChangeMemo(coins, amount, memo = {}) {
    let total = 0;
    let lastCoin = coins[coins.length - 1];
    for (let i = 0; i * lastCoin <= amount; i++) {      
-      total += minChangeMemo(coins.slice(0, -1), amount - i * lastCoin, memo);
+      total += change(coins.slice(0, -1), amount - i * lastCoin, memo);
    }
    
    memo[key] = total;
@@ -25,7 +25,7 @@ function minChangeMemo(coins, amount, memo = {}) {
    return memo[key];
 }
 
-console.log(minChangeMemo([1, 2, 5], 11));
+console.log(change([1, 2, 5], 11));
 
 
 
