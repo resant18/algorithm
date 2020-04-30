@@ -1,4 +1,5 @@
 // PathStream coding challenge
+// TODO: Optimize to O(n) solution
 const solution = (intervals, toInsert) => {
    let stack = [];
 
