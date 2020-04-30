@@ -26,8 +26,8 @@ function stepper(nums) {
 
     for (let i = 0; i < table.length; i++) {
         if (table[i]) {
-            for (let j = 1; j <= nums[i]; j++) {
-                table[i + j] = true;
+            for (let step = 1; step <= nums[i]; step++) {
+                table[i + step] = true;
             }
         }
     }    
@@ -89,8 +89,8 @@ function maxNonAdjacentSumTab(nums) {
     table[0] = nums[0];
 
     for (let i = 1; i < nums.length; i++) {
-        let skipLeftNeighbor = table[i - 2] || 0;        
-        let includeThisNum = skipLeftNeighbor + nums[i];
+        let prevNonAdjMaxSum = table[i - 2] || 0;        
+        let includeThisNum = prevNonAdjMaxSum + nums[i];
         let excludeThisNum = table[i - 1];
         table[i] = Math.max(includeThisNum, excludeThisNum);
     }
