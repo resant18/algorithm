@@ -6,16 +6,30 @@ const findDuplicates = (arr) => {
    // console.log('Find Duplicates');
    for (let i = 0; i < arr.length; i++) {
       // console.log(arr[i]);
-      if (arr[Math.abs(arr[i])] > 0){
-         arr[Math.abs(arr[i])] = -1 * arr[Math.abs(arr[i])];
+      let elAsIdx = Math.abs(arr[i]);
+      if (arr[elAsIdx] > 0){
+         arr[elAsIdx] = -1 * arr[elAsIdx];
          // console.log("make negative");
          // console.log(arr[Math.abs(arr[i])]);
       } 
       else {
-         console.log(Math.abs(arr[i]));
+         console.log(elAsIdx);
       }
    }
 }
+
+// For n inclusive, the solution is:
+const findDuplicatesIncl = (arr) => {   
+   for (let i = 0; i < arr.length; i++) {
+      // minus 1 to prevent out of bound because n is inclusive
+      let elAsIdx = Math.abs(arr[i]) - 1; 
+      if (arr[elAsIdx] > 0) {
+         arr[elAsIdx] = -1 * arr[elAsIdx];         
+      } else {
+         console.log(elAsIdx + 1);
+      }
+   }
+};
 
 
 // Find the Duplicate using O(N) space (Temp)
