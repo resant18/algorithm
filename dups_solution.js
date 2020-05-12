@@ -21,13 +21,17 @@ Array.prototype.dups = function() {
   return dups;
 };
 
-// My solution:
-Array.prototype.dup = function() {
+// My solution. It shorter, but the complexity is not  better
+// Since the lastIndexOf time complexity is O(N)
+// so overall it make O(N^2).
+// Above solution is a better one
+Array.prototype.dups2 = function() {
   let dups = {};
 
   for (let i = 0; i < this.length; i++) {
-    if (dups.hasOwnProperty(this[i])) {
-      dups[this[i]].push(i);
+    let el = this[i];
+    if (dups[el]) {
+      dups[el].push(i);
     } else if (this.lastIndexOf(this[i]) !== i) {
       dups[this[i]] = [i];
     }
@@ -35,3 +39,5 @@ Array.prototype.dup = function() {
 
   return dups;
 };
+
+console.log([1, 3, 4, 3, 0, 3, 0].dups2());
