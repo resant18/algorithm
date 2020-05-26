@@ -1,28 +1,28 @@
+// Pramp
+// Solution is still wrong for some cases
 function diffBetweenTwoStrings(source, target) {
-    // memo[i][j] will be our cached answer to dp(i, j)
-    // let memo = new Array(source.length, target.length)
-    let memo = new Array(source.length).fill(new Array(target.length));
-
-    // dp(i, j) is the minimum edits to transform
-    // string source[i:] into string target[j:].
-    function dp(i, j) {
-        // If one of the strings is empty, we know the answer already.
-        if (i === source.length || j == target.length) {
-          return target.length - j;
-        }
-
-        // Otherwise, if we don't have a cached answer, then find one.
-        else if (memo[i][j] === null) {
-          if (source[i] === target[j]) {
-            memo[i][j] = dp(i+1, j+1);
-          }
-          else {
-            memo[i][j] = 1 + min(dp(i+1, j), dp(i, j+1), dp(i+1, j+1));
-          }
-        }
-
-        return memo[i][j];
+    let dp = [];
+    for (let i = 0; i < source.length + 1; i++) {
+      let row = [];
+      for (let j = 0; j < target.length + 1; j++) {        
+        row.push(j);        
+      }
+      row[0] = i;
+      dp.push(row);
     }
+    
+    for (let i = 1; i < source.length + 1; i++) {
+      for (let j = 1; j < target.length + 1; j++) {        
+        if (source[i - 1] === target[j - 1]) {
+          dp[i][j] = dp[i - 1][j - 1];
+        }
+        else {
+          dp[i][j] = 1 + Math.min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]);
+        }
+      }
+    }
+
+    console.log(dp);
       
     let ans = [];
     let i = 0;
@@ -38,7 +38,7 @@ function diffBetweenTwoStrings(source, target) {
       else {
         // We have to decide whether to subtract source[i],
         // or add target[j].
-        if (dp(i+1, j) <= dp(i, j+1)) {
+        if (j > target.length || dp[i+1][j] <= dp[i][j+1]) {
             ans.push('-' + source[i]);
             i += 1;
         }
@@ -55,7 +55,10 @@ function diffBetweenTwoStrings(source, target) {
         j += 1;
     }
 
+    
     return ans.join(' ');
+
+    
 
 }
 
