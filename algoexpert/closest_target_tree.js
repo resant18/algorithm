@@ -50,42 +50,41 @@ return DFS(10.left, 7, 10) = ... => return DFS(5.right, 7, 5) =  5
                               5                                  |
                               |__________________________________|
 */
-// const DFS = (tree, target, closest) => {
-//    if (!tree) return closest; //
+const DFS = (tree, target, closest) => {
+   if (!tree) return closest; //
 
-//    // update closest value if there is a node that has smaller difference value with target
-//    if (Math.abs(tree.val - target) < Math.abs(closest - target)) { // 5-7 < 10-7
-//       closest = tree.val; //
-//    }
+   // update closest value if there is a node that has smaller difference value with target
+   if (Math.abs(tree.val - target) < Math.abs(closest - target)) { // 5-7 < 10-7
+      closest = tree.val; //
+   }
 
-//    if (target < tree.val) {
-//       // need return here      
-//       return DFS(tree.left, target, closest);
-//    }
-//    else if (target > tree.val) {
-//       // need return here
-//       return DFS(tree.right, target, closest);
-//    }
-//    else {
-//       // need return here
-//       return closest;
-//    }
-// }
+   if (target < tree.val) {
+      // need return here      
+      return DFS(tree.left, target, closest);
+   }
+   else if (target > tree.val) {
+      // need return here
+      return DFS(tree.right, target, closest);
+   }
+   else {
+      // need return here
+      return closest;
+   }
+}
 
-// const findClosestValueInBst = (tree, target) => {
-//    return DFS(tree, target, tree.val);
-// }
+const findClosestValueInBst = (tree, target) => {
+   return DFS(tree, target, tree.val);
+}
+
+console.log(findClosestValueInBst(n1, 12));
 
 
-
-
-function findClosestValueInBst(tree, target) {
+function findClosestValueInBstIterative(tree, target) {
    let closest = tree.val;
    let currentNode = tree;
    
 
-   while (!currentNode) {
-      console.log(closest);
+   while (currentNode) {      
       if (Math.abs(currentNode.val - target) < Math.abs(closest - target)) {
          closest = currentNode.val;
       }
@@ -102,4 +101,4 @@ function findClosestValueInBst(tree, target) {
    return closest;
 }
 
-console.log(findClosestValueInBst(n1, 7));
+console.log(findClosestValueInBstIterative(n1, 12));
