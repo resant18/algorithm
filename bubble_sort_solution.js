@@ -41,3 +41,20 @@ Array.prototype.bubbleSort = function (callback) {
   }
   return resultArr;
 };
+
+function bubbleSort(array) {
+   let sorted;
+
+   while (!sorted) {
+      sorted = true;
+
+      for (let i = 1; i < array.length; i++) {
+         if (array[i - 1] > array[i]) {
+            sorted = false;
+            [array[i - 1], array[i]] = [array[i], array[i - 1]];
+         }
+      }
+   }
+
+   return array;
+}
