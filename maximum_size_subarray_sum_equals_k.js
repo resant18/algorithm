@@ -38,7 +38,7 @@ PSEUDOCODE:
 */
 
 
-// Time: O(nk), Space: O(1)
+// Time: O(n), Space: O(n)
 const maxSubArrayLen = function(nums, k) {   
    const posBySum = { 0: -1 }; // initialize with -1, to grab 
    let len = 0;
