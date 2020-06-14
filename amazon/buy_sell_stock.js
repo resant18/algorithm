@@ -23,31 +23,35 @@ Output: 0
 Explanation: In this case, no transaction is done, i.e. max profit = 0.
 
 PSEUDOCODE:
-Find the minimum and maximum number at one iteration.
+Use Greedy Algorithm to find the minimum and maximum number at one iteration.
 The maximum profit is found by the difference of lowest peak and the highest peak. 
-1. Initiate minimum price (lowest peak) with Max Integer
-2. Initiate maximum profit as zero
+Consider if there is no profit, get the least loss.
+1. Define that the prices data must be more one.
+2. Initiate minimum price (lowest peak) with first price
+3. Initiate maximum profit as the difference between first price and second price.
 3. Iterate while define the lowest peak and maximum profit:
+   - Find possible profit
    - if price is less than minimum, update the minimum prices
-   - if the difference between price and minimum is greater than maximum profit, update maximum profit
+   - if the possible profit is greater than maximum profit, update maximum profit
 4. Return maximum profit
 */
 
 // Time: O(n), Space: O(1)
 const maxProfit = (prices) => 
 {
-   let minPrice = Integer.MAX_VALUE;
-   let maxProfit = 0;
+   if (prices.length < 2) return 0;
 
-   for (const price of prices) {
-      if (price < minPrice) {
-         minPrice = price
-      } else if (price - minPrice > maxProfit) { // put as else if because we don't want to substract the element with that element itself
-         maxProfit = price - minPrice;
-      }
+   let minPrice = prices[0];
+   let maxProfit = prices[1] - prices[0];
+
+   for (let i = 1; i < prices.length; i++) {
+      let possibleProfit = prices[i] - minPrice;
+      maxProfit = Math.max(maxProfit, possibleProfit);
+      minPrice = Math.min(minPrice, prices[i]);      
    }
 
    return maxProfit;
 };
 
-console.log(maxProfit([7, 1, 5, 3, 6, 4]));
+console.log(maxProfit([7, 1, 5, 3, 6, 4])); //5
+console.log(maxProfit([9, 7, 4, 1])); //-2
