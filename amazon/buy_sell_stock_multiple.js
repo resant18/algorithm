@@ -40,10 +40,10 @@ Profit = peaks + valleys
 // Time: O(n), Space: O(1)
 const maxProfit = (prices) => {
    let maxProfit = 0;
-   
+
    for (let i = 1; i < prices.length; i++) {
-      if (prices[i] > prices[i - 1]) {
-         maxProfit += (prices[i] - prices[i - 1]);
+      if (prices[i - 1] < prices[i]) {
+         maxProfit += prices[i] - prices[i - 1];
       }
    }
 
@@ -53,3 +53,4 @@ const maxProfit = (prices) => {
 console.log(maxProfit([7, 1, 5, 3, 6, 4])); //7 = (5 - 1) + (6 - 3)
 console.log(maxProfit([1, 2, 3, 4, 5])); //4 = 5 - 1
 console.log(maxProfit([7, 6, 4, 3, 1])); //0
+console.log(maxProfit([1, 7, 2, 3, 6, 7, 6, 7]));
