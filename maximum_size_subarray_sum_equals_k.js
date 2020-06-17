@@ -39,8 +39,8 @@ PSEUDOCODE:
 
 
 // Time: O(n), Space: O(n)
-const maxSubArrayLen = function(nums, k) {   
-   const posBySum = { 0: -1 }; // initialize with -1, to grab 
+const maxSubArrayLen = function(nums, k) {      
+   const posBySum = { 0: -1 }; // sum[-1] = 0, for case sum[0..i] where i is inclusive 
    let len = 0;
    let sum = 0;
 
