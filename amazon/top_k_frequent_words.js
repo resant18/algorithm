@@ -1,10 +1,12 @@
 /*
 692. Top K Frequent Words
-Medium
+Level: Medium
+Company: Amazon, Google, Facebook, Oracle, Microsoft, Bloomberg, Apple
 
 Given a non-empty list of words, return the k most frequent elements.
 
-Your answer should be sorted by frequency from highest to lowest. If two words have the same frequency, then the word with the lower alphabetical order comes first.
+Your answer should be sorted by frequency from highest to lowest. 
+If two words have the same frequency, then the word with the lower alphabetical order comes first.
 
 Example 1:
 Input: ["i", "love", "leetcode", "i", "love", "coding"], k = 2
@@ -21,9 +23,9 @@ Explanation: "the", "is", "sunny" and "day" are the four most frequent words,
 Note:
 You may assume k is always valid, 1 ≤ k ≤ number of unique elements.
 Input words contain only lowercase letters.
+
 Follow up:
 Try to solve it in O(n log k) time and O(n) extra space.
-
 */
 
 const topKFrequent = (words, k) => {
@@ -35,7 +37,7 @@ const topKFrequent = (words, k) => {
 
    let result = Object.keys(frequency).sort( (a,b) => {
       let compareCount = frequency[b] - frequency[a];
-      if (compareCount === 0) return a.localeCompare(b); // if equal - sort alphabetically
+      if (compareCount === 0) return a.localeCompare(b); // if equal - sort alphabetically (lexicographically)
       return compareCount; // we want to sort from highest to low frequency
    });
 
