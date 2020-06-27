@@ -6,6 +6,7 @@ The fastest sorting algorithms are O(nlogn), so none of those algorithms will be
 However, we can use a heap to solve this problem in linear time.
 */
 
+// Converting an array to a Heap which has time complexity: O(n)
 class MaxHeap {
    constructor() {
       this.array = [null];
@@ -165,6 +166,6 @@ console.log(heap.array);
 // Heap Sort
 console.log(heapSort([2, 5, 1, 4, 3, 7, 10]));
 
-// Max Heap
+// Is MaxHeap
 console.log("isMaxHeap: ", isMaxHeap([null, 10, 5, 7, 2, 6])); //false
 console.log("isMaxHeap: ", isMaxHeap([null, 50, 42, 27, 32, 24])); //true
