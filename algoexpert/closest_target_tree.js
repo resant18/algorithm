@@ -35,11 +35,13 @@ n6.right = n9;
 //  1          14
 /* 
 PSEUDOCODE:
-1. Base case: 
-   If tree is null, it returns null, the closest is null
-2  If tree is single node = 10, it returns 10, the closest is 10
-   If tree is a tree, it returns closest
-3. Update closest, when there is a node that has smaller difference value with target
+1. Base case:  
+   If it reached the leave (end of a traverse) return closest
+2  Using inorder:
+   - Update closest, when there is a node that has smaller difference value with target
+   - Continue traverse to left branch if root value is smaller than target, or
+   - Continue traverse to right branch if root value is larger than target, or
+   - If the root value = target, return the closest
 
 
 
@@ -50,6 +52,10 @@ return DFS(10.left, 7, 10) = ... => return DFS(5.right, 7, 5) =  5
                               5                                  |
                               |__________________________________|
 */
+
+// Method 1: Recursive
+// Average: Time O(log(n)), Space: O(log(n))
+// Worst: Time O(n), Space: O(n)
 const DFS = (tree, target, closest) => {
    if (!tree) return closest; //
 
@@ -78,7 +84,9 @@ const findClosestValueInBst = (tree, target) => {
 
 console.log(findClosestValueInBst(n1, 12));
 
-
+// Method 2: ITERATIVE
+// Average: Time O(log(n)), Space: O(1)
+// Worst: Time O(n), Space: O(1)
 function findClosestValueInBstIterative(tree, target) {
    let closest = tree.val;
    let currentNode = tree;
