@@ -55,7 +55,8 @@ return DFS(10.left, 7, 10) = ... => return DFS(5.right, 7, 5) =  5
 
 // Method 1: Recursive
 // Average: Time O(log(n)), Space: O(log(n))
-// Worst: Time O(n), Space: O(n)
+// Worst: Time O(n), if worst case a tree has only 1 branch (similar to linkedlist), there is no chance to eliminate half tree.
+//        Space: O(n)
 const DFS = (tree, target, closest) => {
    if (!tree) return closest; //
 
@@ -86,7 +87,8 @@ console.log(findClosestValueInBst(n1, 12));
 
 // Method 2: ITERATIVE
 // Average: Time O(log(n)), Space: O(1)
-// Worst: Time O(n), Space: O(1)
+// Worst: Time O(n), 
+//        Space: O(1), because it does not use stack.
 function findClosestValueInBstIterative(tree, target) {
    let closest = tree.val;
    let currentNode = tree;
