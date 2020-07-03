@@ -1,3 +1,25 @@
+// This is more intuitive
+const treeHeight = (root) => {
+   if (!root) return 0;
+   return Math.max(treeHeight(root.left), treeHeight(root.right)) + 1;
+};
+
+const isBalanced = (root) => {
+   if (!root) return true;
+
+   let leftHeight = treeHeight(root.left);
+   let rightHeight = treeHeight(root.right);
+
+   let differenceHeight = Math.abs(leftHeight - rightHeight);
+
+   // If left subtree and right subtree is balanced and
+   // both leftsubtree and rightis subtree itsleft is balanaced,
+   // this tree is balanced
+   return differenceHeight <= 1 && isBalanced(root.left) && isBalanced(root.right);
+};
+
+   
+
 // Byte by Byte
 var balancedHeight = function(root) {
     if (root === null) return 0;
