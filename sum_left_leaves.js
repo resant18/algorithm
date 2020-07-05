@@ -1,6 +1,7 @@
 /*
 LeetCode #404. Sum of Left Leaves
 Level: Easy
+Company: Bloomberg
 
 Find the sum of all left leaves in a given binary tree.
 
