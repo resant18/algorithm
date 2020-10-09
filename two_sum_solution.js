@@ -55,3 +55,35 @@ const twoSum = (arr, target) => {
 
    return result;
 };
+
+// Remove the duplicate pair
+function stockPairs(stocksProfit, target) {
+   // Write your code here
+   let totalPairs = 0;
+   let left = 0;
+   let right = stocksProfit.length - 1;
+
+   // 3, 3, 5, 6, 6, 7, 9, 11, 13
+   //          |  |
+   stocksProfit.sort((a, b) => a - b);
+   while (left < right) {
+      let numL = stocksProfit[left];
+      let numR = stocksProfit[right];
+
+      while (stocksProfit[left] === stocksProfit[left + 1] && left + 1 < right) left++;
+      if (numL + numR < target) {
+         left++;
+      } else if (numL + numR > target) {
+         right--;
+      } else {
+         totalPairs++;
+         left++;
+         right--;
+         while (right - 1 > left && stocksProfit[right] === stocksProfit[right - 1]) right--;
+      }
+   }
+
+   return totalPairs;
+}
+
+console.log(stockPairs([7, 6, 6, 3, 9, 3, 5, 1 ], 12));
