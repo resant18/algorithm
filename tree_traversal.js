@@ -1,3 +1,9 @@
+/* Different Data Structure to represent Tree */
+
+// 1. Array
+
+
+// 2. TreeNode
 function TreeNode(val) {
    this.val = val;
    this.left = this.right = null;
@@ -22,16 +28,29 @@ n3.right = n6;
 //  / \    \
 // 3   7    18
 
-// recursive
+/* DFS */
+// Method 1 : DFS Recursive
+const DFS = (root) => {
+   if (!root) return;
+
+   console.log(root.val);
+
+   DFS(root.left);
+   DFS(root.right);
+}
+
 const inOrderRecursive = (root) => {
-   if (root === null) return null;
+   if (!root) return;
 
    inOrder(root.left);
    console.log(root.val);
    inOrder(root.right);
-}
+};
 
-// DFS Iterative
+console.log(DFS(n1));
+
+
+// Method 2 : DFS Iterative
 const DFSIterative = (root) => {
    let stack = [root];
 
@@ -47,17 +66,9 @@ const DFSIterative = (root) => {
 
 // console.log(DFSIterative(n1));
 
-const DFS = (root) => {
-   if (!root) return;
+/* ************************ */
 
-   console.log(root.val);
-
-   DFS(root.left);
-   DFS(root.right);
-}
-
-console.log(DFS(n1));
-
+// Method 3: BFS
 const BFS = (root) => {   
    let q = [[root, 0]];
    
