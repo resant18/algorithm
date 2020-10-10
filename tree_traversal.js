@@ -29,7 +29,8 @@ n3.right = n6;
 // 3   7    18
 
 /* DFS */
-// Method 1 : DFS Recursive
+// Method 1 : DFS 
+// A. Recursive
 const DFS = (root) => {
    if (!root) return;
 
@@ -50,7 +51,7 @@ const inOrderRecursive = (root) => {
 console.log(DFS(n1));
 
 
-// Method 2 : DFS Iterative
+// B. Iterative
 const DFSIterative = (root) => {
    let stack = [root];
 
@@ -68,7 +69,22 @@ const DFSIterative = (root) => {
 
 /* ************************ */
 
-// Method 3: BFS
+// Method 2: BFS
+const BFS = (root) => {
+   let q = [root];
+
+   while (q.length) {
+      let node = q.shift();
+
+      console.log("Level:" + lvl);
+      console.log(node.val);
+
+      if (node.left) q.push(node.left);
+      if (node.right) q.push(node.right);
+   }
+};
+
+// Example of use: BFS iteration with level
 const BFS = (root) => {   
    let q = [[root, 0]];
    
