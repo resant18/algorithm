@@ -1,7 +1,26 @@
 /* Different Data Structure to represent Tree */
 
 // 1. Array
+var buildTree = (arr) => {
+   let n = arr.length;
+   let root = null;
+   root = insertNode(arr, root, 0, n);
+   return root;
+};
 
+var insertNode = (arr, root, i, n) => {
+   if (i < n) {
+      let node = new TreeNode(arr[i]);
+      root = node;
+
+      root.left = insertNode(arr, root.left, 2 * i + 1, n);
+      root.right = insertNode(arr, root.right, 2 * i + 2, n);
+   }
+   return root;
+};
+
+
+// console.log(buildTree([1, 2, 3]));
 
 // 2. TreeNode
 function TreeNode(val) {
@@ -36,6 +55,7 @@ Pre-Order has the patten of self, left, right. This means:
 - a node must be printed before it's children
 - a node's left subtree must be printed before it's right subtree
 */
+console.log("DFS PreOrder: ");
 const dfsPreOrder = (root) => { // 10, 5, 3, 7, 15, 18
    if (!root) return;
 
@@ -44,39 +64,40 @@ const dfsPreOrder = (root) => { // 10, 5, 3, 7, 15, 18
    dfsPreOrder(root.left);
    dfsPreOrder(root.right);
 }
+dfsPreOrder(n1);
 
-// console.log('DFS PreOrder: ', dfsPreOrder(n1));
 
 /*** B. InOrder - Top -> Bottom 
 In-Order has the pattern of left, self, right. This means:
  - a node can only be printed once it's left subtree has been completely printed.
  - a node's right subtree can only be printed once the node itself has been printed.
 */
-const inOrderRecursive = (root) => { // print: 3, 5, 7, 10, 15, 18
+console.log("DFS InOrder:");
+const dfsInOrder = (root) => { // print: 3, 5, 7, 10, 15, 18
    if (!root) return;
 
-   inOrderRecursive(root.left);
+   dfsInOrder(root.left);
    console.log(root.val);
-   inOrderRecursive(root.right);
+   dfsInOrder(root.right);
 };
 
-console.log('DFS InOrder:', inOrderRecursive(n1));
+dfsInOrder(n1);
 
 /*** C. PostOrder - Bottom -> Top
 Post-Order has the pattern of left, right, self. This means:
 - a node can only be printed after it's left and right subtrees
 - a node's left subtree is printed before it's right subtree
 */
-const inOrderRecursive = (root) => {
-   // print: 3, 5, 7, 10, 15, 18
+console.log("DFS PostOrder:");
+const dfsPostOrder = (root) => {  // print: 3, 5, 7, 10, 15, 18
    if (!root) return;
 
-   inOrderRecursive(root.left);
+   dfsPostOrder(root.left);   
+   dfsPostOrder(root.right);
    console.log(root.val);
-   inOrderRecursive(root.right);
 };
 
-console.log("DFS InOrder:", inOrderRecursive(n1));
+dfsPostOrder(n1);
 
 /******************************************************* */
 // B. DFS Iterative
@@ -112,7 +133,7 @@ const BFS = (root) => {
    }
 };
 
-// Example of use: BFS iteration with level
+// Example of use: BFS Level Order Traversal
 const BFSPerLevel = (root) => {   
    let q = [[root, 0]];
    
