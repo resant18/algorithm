@@ -28,30 +28,58 @@ n3.right = n6;
 //  / \    \
 // 3   7    18
 
-/* DFS */
-// Method 1 : DFS 
-// A. Recursive
-const DFS = (root) => {
+/* Different Tree Traversal Method */
+
+// Method 1 : DFS Recursive
+/***  A. PreOrder - Top -> Bottom
+Pre-Order has the patten of self, left, right. This means:
+- a node must be printed before it's children
+- a node's left subtree must be printed before it's right subtree
+*/
+const dfsPreOrder = (root) => { // 10, 5, 3, 7, 15, 18
    if (!root) return;
 
    console.log(root.val);
 
-   DFS(root.left);
-   DFS(root.right);
+   dfsPreOrder(root.left);
+   dfsPreOrder(root.right);
 }
 
-const inOrderRecursive = (root) => {
+// console.log('DFS PreOrder: ', dfsPreOrder(n1));
+
+/*** B. InOrder - Top -> Bottom 
+In-Order has the pattern of left, self, right. This means:
+ - a node can only be printed once it's left subtree has been completely printed.
+ - a node's right subtree can only be printed once the node itself has been printed.
+*/
+const inOrderRecursive = (root) => { // print: 3, 5, 7, 10, 15, 18
    if (!root) return;
 
-   inOrder(root.left);
+   inOrderRecursive(root.left);
    console.log(root.val);
-   inOrder(root.right);
+   inOrderRecursive(root.right);
 };
 
-console.log(DFS(n1));
+console.log('DFS InOrder:', inOrderRecursive(n1));
 
+/*** C. PostOrder - Bottom -> Top
+Post-Order has the pattern of left, right, self. This means:
+- a node can only be printed after it's left and right subtrees
+- a node's left subtree is printed before it's right subtree
+*/
+const inOrderRecursive = (root) => {
+   // print: 3, 5, 7, 10, 15, 18
+   if (!root) return;
 
-// B. Iterative
+   inOrderRecursive(root.left);
+   console.log(root.val);
+   inOrderRecursive(root.right);
+};
+
+console.log("DFS InOrder:", inOrderRecursive(n1));
+
+/******************************************************* */
+// B. DFS Iterative
 const DFSIterative = (root) => {
    let stack = [root];
 
@@ -60,7 +88,7 @@ const DFSIterative = (root) => {
 
       console.log(node.val);
       
-      if (node.right) stack.push(node.right);
+      if (node.right) stack.push(node.right); // push right first, so the result would be from left -> right
       if (node.left) stack.push(node.left);
    }
 }
@@ -79,13 +107,13 @@ const BFS = (root) => {
       console.log("Level:" + lvl);
       console.log(node.val);
 
-      if (node.left) q.push(node.left);
+      if (node.left) q.push(node.left); // push left first, because it use queue.shift here.
       if (node.right) q.push(node.right);
    }
 };
 
 // Example of use: BFS iteration with level
-const BFS = (root) => {   
+const BFSPerLevel = (root) => {   
    let q = [[root, 0]];
    
    while (q.length) {
