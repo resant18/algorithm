@@ -116,6 +116,27 @@ const DFSIterative = (root) => {
 
 // console.log(DFSIterative(n1));
 
+// Example of use: DFS Traversal Per Level
+const dfsPerLevel1 = (root) => {
+   let nodesPerLevel = [];   
+
+   const dfs = (root, level) => {
+      if (!root) return;
+
+      if (level in nodesPerLevel) nodesPerLevel[level].push(root.val)
+      else nodesPerLevel[level] = [root.val];
+
+      dfs(root.left, level + 1);
+      dfs(root.right, level + 1);      
+   }
+
+   dfs(root, 0);
+   return nodesPerLevel;
+}
+
+// console.log('DFS Per Level: ', dfsPerLevel1(n1));
+
+console.log("DFS Per Level: ", dfsPerLevel(n1));
 /* ************************ */
 
 // Method 2: BFS
