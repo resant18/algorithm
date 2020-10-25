@@ -1,3 +1,14 @@
+// AlgoExpert: Topology Sort (see image)
+// Level: Hard
+
+
+/** 
+Method 1: 
+For each of the job, traverse back the prereqs. If while traversing,
+it came back to the previous job that is in the process (visited = 'visiting'), 
+then there's a cycle. Return early in this case. 
+Otherwise add that job to the result and keep traversing the rest.
+*/
 class JobGraph {
    constructor(jobs) {
       // [ JobNode { job: 1, prereqs: [], visited: false, visiting: false },
@@ -53,16 +64,6 @@ const createJobGraph = (jobs, deps) => {
    return jobGraph;
 }
 
-/** 
-
-/** Logic to create ordered jobs  */ 
-/*
-Method 1: 
-For each of the job, traverse back the prereqs. If while traversing,
-it came back to the previous job that is in the process (visited = 'visiting'), 
-then there's a cycle. Return early in this case. 
-Otherwise add that job to the result and keep traversing the rest.
-*/
 const createOrderedJobs = (jobGraph) => {   
    let orderedJobs = [];
 
