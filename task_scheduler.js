@@ -39,10 +39,36 @@ tasks[i] is upper-case English letter.
 The integer n is in the range [0, 100].
 */
 /*
+Sample Input: 
+n = 2
+tasks = A, A, A, B, B, B
+
 Algorithm: Greedy
+1. Find the most frequent task
+   - Find the frequency of each task
+   - Sort the frequency
+   Why: By taking the most frequent task, it could act as a container(limit).
+   Arrange it like this to spread the tasks out 
+   B _ _
+   B _ _
+   B    
+2. Count the possible slots in between B task (symbolize by - )   
+   This slot could be filled with other task or idle. 
+   slots = (maxFrequency - 1) * n.
+   It minus one here because the slots will be in between the task, not at the very end.
+3  Fill up the available slots until frequency list is empty or idleSlot <= 0
+   - Get the next most frequent task (sortedFrq.pop()), use this task to fill up the available slot (maxFrequency - 1)
+   B A _
+   B A _
+   B A _
+
+   B A idle
+   B A idle
+   B A 
 
 
-*/
+Algorithm 2: Math formula: https://medium.com/@swgarciab/task-scheduler-leetcode-problem-a74acadf0e22
+*/ 
 
 const leastInterval = (tasks, n) => {
    let frequencies = {};
@@ -64,6 +90,6 @@ const leastInterval = (tasks, n) => {
    return idleSlots > 0 ? idleSlots + tasks.length : tasks.length;
 }
 
-let tasks = ["A", "A", "A", "B", "B", "B", "A"]
+let tasks = ["A", "A", "A", "B", "B", "B"]
 let n = 2;
 console.log(leastInterval(tasks, n));
