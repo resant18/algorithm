@@ -68,6 +68,9 @@ Algorithm: Greedy
 
 
 Algorithm 2: Math formula: https://medium.com/@swgarciab/task-scheduler-leetcode-problem-a74acadf0e22
+
+Time Complexity: O(C log C) where C is frequencies  or O(N) ??
+Space Complexity: O (N) -> Could be O(1), if the task name is a single letter
 */ 
 
 const leastInterval = (tasks, n) => {
@@ -93,3 +96,30 @@ const leastInterval = (tasks, n) => {
 let tasks = ["A", "A", "A", "B", "B", "B"]
 let n = 2;
 console.log(leastInterval(tasks, n));
+
+// Follow up:
+// To optimize the space complexity, change the frequencies into a bucket of 26 (letters) slots.
+const leastIntervalLetter = (tasks, n) => {
+   // The space complexity here is O(1) because it's constant (26).
+   let frequencies = Array(5).fill(0);
+
+   for (const task of tasks) {
+      frequencies[task.charCodeAt(0) - "A".charCodeAt(0)] =
+         frequencies[task.charCodeAt(0) - "A".charCodeAt(0)] + 1 || 1;
+   }
+
+   //The time complexity of sort here is constant because it's always 26.
+   frequencies.sort();
+   let maxFreq = frequencies.pop();
+   let slots = (maxFreq - 1) * n;
+
+   while (frequencies.length && slots > 0) {
+      slots -= Math.min(maxFreq - 1, frequencies.pop());
+   }
+
+   return slots > 0 ? slots + tasks.length : tasks.length;
+}
+
+let tasks2 = ["A", "A", "A", "B", "B", "B"];
+let n2 = 2;
+console.log(leastIntervalLetter(tasks2, n2));
