@@ -39,3 +39,38 @@ function countIdealNumbers(low, high) {
 }
 
 console.log(countIdealNumbers(15, 1250000)); //15, 25, 27, 45, 75, 81, 125 => 7
+
+
+// Using DP => still error
+function getIdealNums(low, high) {
+   // Write your code here
+   let f3 = 0;
+   let f5 = 0;
+   let dp = [];
+   let count = 0;
+
+   let num = 0;
+
+   console.log(dp);
+   
+   if (low === 1) num = 1;
+   else if (low % 3 === 0) num = low;
+   else num = Math.ceil(low / 3) * 3;
+
+   console.log(num);   
+
+   dp[0] = num;
+   
+   for (let i = 1; i <= high - low + 1; i++) {
+      let possibleIdealNum = Math.min(dp[f3] * 3, dp[f5] * 5);
+      dp.push(possibleIdealNum);   
+      if (possibleIdealNum === dp[f3] * 3) f3++;
+      if (possibleIdealNum === dp[f5] * 5) f5++;      
+   }   
+
+   console.log(dp);
+
+   return count;
+}
+
+// console.log(getIdealNums(1, 10));
