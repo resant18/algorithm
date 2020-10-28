@@ -55,11 +55,7 @@ class MinMaxStack {
 
    // Time: O(N), Space: O(1)
    reverse() {
-      // 1, 2, 3, 4
-
-      prev = 1 
-      curr = 2
-      next = 3
+      // use Linked List => StackNode
    }
 
    print() {
