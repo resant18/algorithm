@@ -83,6 +83,7 @@ function maxNonAdjacentSum(nums) {
     // return maxSum;
 }
 
+// Time: O(N), Space: O(N)
 function maxNonAdjacentSumTab(nums) {
     if (nums.length === 0) return 0;
     let table = new Array(nums.length).fill(0);
@@ -100,6 +101,7 @@ function maxNonAdjacentSumTab(nums) {
     
 }
 
+// Better solution: Time: O(N), Space: O(1)
 // Geeks for Geeks solution
 function maxNonAdjacentSum(nums) {
     let incl = 0;
@@ -118,6 +120,7 @@ function maxNonAdjacentSum(nums) {
     return Math.max(incl, excl);
 }
 
+// Using memo
 function maxNonAdjacentSumMemo(nums, memo = {}) {
     if (nums.length in memo) return memo[nums.length];
     if (nums.length === 0) return 0;
