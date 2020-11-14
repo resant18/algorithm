@@ -32,8 +32,8 @@ class MaxHeap {
       let parentIdx = this.getParentIdx(idx);
       if (heap[idx] > heap[parentIdx]) {
          this.swap(heap, idx, parentIdx);
-      }
-      this.siftUp(heap, parentIdx);
+         this.siftUp(heap, parentIdx);
+      }      
    }
 
    // Time: O(log n), Space: O(1)
@@ -105,19 +105,18 @@ class MaxHeap {
 
 let maxHeap = new MaxHeap();
 
-maxHeap.insert(42);
-maxHeap.insert(32);
-maxHeap.insert(24);
-maxHeap.insert(100);
-maxHeap.insert(50);
-maxHeap.insert(27);
+maxHeap.insert(1);
+maxHeap.insert(2);
+maxHeap.insert(3);
+maxHeap.insert(4);
+maxHeap.insert(5);
+
 console.log(maxHeap.heap);
 
 console.log(maxHeap.remove());
-console.log(maxHeap.heap);
 console.log(maxHeap.remove());
-console.log(maxHeap.heap);
-console.log(maxHeap.isMaxHeap());
+console.log(maxHeap.remove());
+
 
 // ==========================================================================
 // Null based array (App Academy)
