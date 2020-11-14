@@ -37,7 +37,16 @@ PSEUDOCODE:
    Sum[k] = Sum[i] - Sum[i - k]
 */
 
-
+/*
+Input: nums = [-2, -1, 2, 1], k = 1
+{
+   0: -1,
+   -2: 0
+   -3 : 1
+   -1 : 2
+   
+}
+*/
 // Time: O(n), Space: O(n)
 const maxSubArrayLen = function(nums, k) {      
    const posBySum = { 0: -1 }; // sum[-1] = 0, for case sum[0..i] where i is inclusive 
