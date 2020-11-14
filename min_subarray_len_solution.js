@@ -14,7 +14,7 @@
 
 
 // s = 7, nums = [2,3,1,2,4,3]
-// TWO POINTER STRATEGY
+// TWO POINTER STRATEGY / SLIDING WINDOW
 // 1. Initiate first pointer (slow) as 0 => slow
 // 2. Initiate second pointer (fast) as 1 that will be used to iterate the array => fast
 // 3. Iterate until get the total >= s => total
@@ -22,20 +22,20 @@
 
 const minSubArrayLen = function(s, nums) {
    let slow = 0;
-   let len = nums.length + 1;
+   let minLength = nums.length + 1;
    let total = 0;
 
    for (let fast = 0; fast < nums.length; fast++) {
       total += nums[fast];
 
       while (total >= s) {         
-         len = Math.min(len, fast - slow + 1);
+         minLength = Math.min(minLength, fast - slow + 1);
          total -= nums[slow];
          slow++;
       }
    }
 
-   return len > nums.length ? 0 : len;
+   return minLength > nums.length ? 0 : minLength;
 }
 
 console.log(minSubArrayLen(5, [1, 1, 1, 2, 5]));
