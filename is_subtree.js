@@ -78,7 +78,7 @@ var isSubtree = function(s, t) {
    // This base case is for: if parent doesn't have any more node
    // and the subtree has more nodes, even though the previous nodes are equal,
    // it should return false   
-   if (s === null) return false;   
+   if (s === null || t === null) return false;   
 
    // both of the conditions have to be true to return true
    if ((s.val === t.val) && (isSameTree(s, t))) return true;   
