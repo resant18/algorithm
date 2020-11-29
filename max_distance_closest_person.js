@@ -51,8 +51,8 @@ At least one seat is occupied.
 Edge cases:
 
   0 0 0 1 => 3
-  0 1 2 0
-if left = 0, return 2 + 1
+  1 2 3 0
+if left = 0, return 3
 
 
   1 0 0 0 => 3
@@ -65,25 +65,24 @@ if left != 0 and right != 0, ceil(2 / 2) = 1
 
 
   0 1 0 0 0 1 0 => 2
-  0 0 1 2 3 0 1
-if left = 0, return 0 + 1
-(3 + 1) / 2 = 2
-if the end, return 1
+  1 0 1 2 3 0 1
+  | |       | |
+  a b       c d
+a) left = 0, return 1
+b) left = 1 && right = 1, return ceil(3 / 2) = 2
+c) right = 0, return 1
 max = 2
 
 
-1 0 0 0 1 0 1 1 0 0 0
-0 1 2 3 0 1 0 0 1 2 3
-if left != 0, return (3 + 1) / 2 = 2
-(1 + 1) / 2 = 1
-ceil(0 + 1) / 2 = 1
-if right = 0, return 3
-max = 3
-      
-      
-0 0 0 1 => 3    
-      |
-distance= 0 1 2
+  1 0 0 0 0 1 0 1 1 0 0 0
+  0 1 2 3 4 0 1 0 0 1 2 3
+            |   | |     |
+            a   b c     d
+a) left = 1 && right = 1, return ceil(4 / 2) = 2          
+b) left = 1 && right = 1, return ceil(1 / 2) = 1          
+c) left = 1 && right = 1, return ceil(0 / 2) = 0
+d) left = 1, right = 0, return 3          
+max = 3      
 
 **/
 
@@ -93,21 +92,22 @@ var maxDistToClosest = function(seats) {
    let left;
    let right = seats[0];
 
-   for (let i = 1; i < seats.length; i++) {
+   for (let i = 0; i < seats.length; i++) {
+      // count the empty seats
       if (seats[i] === 0) distance++;
+      // define the boundary: if the seat is filled or the last seat in the row
       if (seats[i] === 1 || i === seats.length - 1) {
          left = right;
          right = seats[i];
 
+         // if the empty seats are between left filled seat and right filled seat, divide by 2
          if (left === 1 && right === 1) {
             maxDistance = Math.max(maxDistance, Math.ceil(distance / 2))
-         }
-         else if (left === 0 && right === 1) {
-            maxDistance = Math.max(maxDistance, distance + 1);
-         }
-         else if (right === 0) {
+         }         
+         else {
             maxDistance = Math.max(maxDistance, distance);
          }
+         // reset the counter
          distance = 0;
       }
    }
@@ -119,3 +119,57 @@ console.log(maxDistToClosest([0, 0, 0, 1])); //3
 console.log(maxDistToClosest([1, 0, 0, 1])); //1
 console.log(maxDistToClosest([1, 0, 0, 0, 1])); //2
 console.log(maxDistToClosest([1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0])); //3
+
+
+
+/*
+1 0 0 0 1
+distance + 1
+
+1 0 0 0 0
+distance
+
+0 0 0 0 1
+
+
+
+
+*/
+
+// 1, 0, 0, 0
+//    1  2  3
+// leftIdx = 0
+// rightIdx = 0
+
+const maxDistSeatNumber = (seats) => {
+   let maxDistance = 0;      
+   let distance = 0;   
+   let rightIdx = 0;   
+   let leftBoundary = 0;
+
+   for (let i = 0; i < seats.length; i++) {
+      if (seats[i] === 0) distance++;
+      if (seats[i] === 1 || i === seats.length - 1) {
+         leftIdx = rightIdx;          
+         rightIdx = i;         
+
+         if (seats[leftIdx] === 1 && seats[rightIdx] === 1) {
+            distance = Math.ceil(distance / 2);
+         }
+         if (distance > maxDistance) {
+            maxDistance = distance;
+            leftBoundary = leftIdx;
+         }
+         distance = 0;
+      }
+   }
+   
+   return seats[leftBoundary] === 0 ? 0 : leftBoundary + maxDistance;
+}
+
+console.log("Testing maxDistSeatNumber");
+console.log(maxDistSeatNumber([1, 0, 0, 0])); //3
+console.log(maxDistSeatNumber([0, 0, 0, 1])); //0
+console.log(maxDistSeatNumber([1, 0, 0, 1])); //1
+console.log(maxDistSeatNumber([1, 0, 0, 0, 1])); //2
+console.log(maxDistSeatNumber([1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0])); //10
