@@ -257,3 +257,56 @@ console.log(findKthLargestWithMinHeap([3, 2, 1, 5, 6, 4], 2)); //5
 console.log(findKthLargestWithMinHeap([3, 2, 3, 1, 2, 4, 5, 5, 6], 4)); //4
 
 // Method 4: Using Quick Select
+// Time: Average O(n), Worst: O(n^2)
+
+// It considers the last element as pivot 
+// and moves all smaller element to left of 
+// it and greater elements to right 
+const partition = (arr, l, r) => {
+   // choose the last element as pivot
+   let p = arr[r];
+   let i = l;
+
+   for (let j = l; j <= r - 1; j++) {
+      if (arr[j] >= p) {
+         [arr[i], arr[j]] = [arr[j], arr[i]];
+         i++;
+      }
+   }
+
+   [arr[i], arr[r]] = [arr[r], arr[i]];
+   return i;
+}
+
+const select = (arr, l, r, k) => {
+   // If k is smaller than number of elements 
+   // in array 
+   if (k > 0 && k <= r - l + 1) {
+      // Partition the array around last 
+      // element and get position of pivot 
+      // element in sorted array 
+      let pos = partition(arr, l, r);
+
+      // if position is same as k
+      if (pos - l === k - 1) return arr[pos];
+
+      // If position is more, recur for 
+      // left subarray 
+      if (pos - l > k - 1) return select(arr, l, pos - 1, k); 
+      // Else recur for right subarray 
+      return select(arr, pos + 1, r, k - pos + l - 1); 
+   } 
+  
+   // If k is more than number of elements 
+   // in array 
+   return Infinity; 
+}
+
+
+const findKthLargestWithQuickSelect = (nums, k) => {
+   return select(nums, 0, nums.length - 1, k)
+}
+
+console.log("Method 4: Using Quick Select");
+console.log(findKthLargestWithQuickSelect([3, 2, 1, 5, 6, 4], 2)); //5
+console.log(findKthLargestWithQuickSelect([3, 2, 3, 1, 2, 4, 5, 5, 6], 4)); //4
