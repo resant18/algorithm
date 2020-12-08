@@ -45,5 +45,28 @@ function anagrams(str1, str2) {
    return Object.values(letters).every((letterCount) => letterCount === 0);
 }
 
-console.log(anagrams("listen", "potato"));
-console.log(anagrams('listen', 'silent'))
+// console.log(anagrams("listen", "potato"));
+// console.log(anagrams('listen', 'silent'));
+
+
+// Facebook Interview Reverse to Make Equal
+function areTheyEqual(array_a, array_b) {
+   // Write your code here
+   const count = {};
+
+   for (const num of array_a) {
+      count[num] = count[num] + 1 || 1;
+   }
+   console.log(count);
+
+   for (const num of array_b) {
+      if (num in count) count[num] = count[num] - 1;
+      else count[num] = 1;
+   }
+
+   console.log(count);
+
+   return Object.values(count).every((c) => c === 0);
+}
+
+console.log(areTheyEqual([1, 2, 3, 4], [1, 4, 3, 3]));
