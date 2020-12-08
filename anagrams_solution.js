@@ -33,8 +33,11 @@ function anagrams(str1, str2) {
    console.log(letters);
 
    str2.split("").forEach((char) => {
-      if (!(char in letters)) letters[char] = 1;
-      else letters[char] -= 1;
+      // we can't use this because if letters[char] - 1 = 0 
+      // 0 || 1 will return 1 
+      //letters[char] = letters[char] - 1 || 1;
+      if (char in letters) letters[char] = letters[char] - 1;
+      else letters[char] = 1;
    });
 
    console.log(letters);
@@ -43,3 +46,4 @@ function anagrams(str1, str2) {
 }
 
 console.log(anagrams("listen", "potato"));
+console.log(anagrams('listen', 'silent'))
