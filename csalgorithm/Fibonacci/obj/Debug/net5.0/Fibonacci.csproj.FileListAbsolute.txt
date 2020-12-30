@@ -1,0 +1,15 @@
+/Users/resant/AppAcademy/algorithm/cs/Fibonacci/obj/Debug/net5.0/Fibonacci.csprojAssemblyReference.cache
+/Users/resant/AppAcademy/algorithm/cs/Fibonacci/obj/Debug/net5.0/Fibonacci.GeneratedMSBuildEditorConfig.editorconfig
+/Users/resant/AppAcademy/algorithm/cs/Fibonacci/obj/Debug/net5.0/Fibonacci.AssemblyInfoInputs.cache
+/Users/resant/AppAcademy/algorithm/cs/Fibonacci/obj/Debug/net5.0/Fibonacci.AssemblyInfo.cs
+/Users/resant/AppAcademy/algorithm/cs/Fibonacci/obj/Debug/net5.0/Fibonacci.csproj.CoreCompileInputs.cache
+/Users/resant/AppAcademy/algorithm/cs/Fibonacci/bin/Debug/net5.0/Fibonacci.deps.json
+/Users/resant/AppAcademy/algorithm/cs/Fibonacci/bin/Debug/net5.0/Fibonacci.runtimeconfig.json
+/Users/resant/AppAcademy/algorithm/cs/Fibonacci/bin/Debug/net5.0/Fibonacci.runtimeconfig.dev.json
+/Users/resant/AppAcademy/algorithm/cs/Fibonacci/bin/Debug/net5.0/Fibonacci.dll
+/Users/resant/AppAcademy/algorithm/cs/Fibonacci/bin/Debug/net5.0/ref/Fibonacci.dll
+/Users/resant/AppAcademy/algorithm/cs/Fibonacci/bin/Debug/net5.0/Fibonacci.pdb
+/Users/resant/AppAcademy/algorithm/cs/Fibonacci/obj/Debug/net5.0/Fibonacci.dll
+/Users/resant/AppAcademy/algorithm/cs/Fibonacci/obj/Debug/net5.0/ref/Fibonacci.dll
+/Users/resant/AppAcademy/algorithm/cs/Fibonacci/obj/Debug/net5.0/Fibonacci.pdb
+/Users/resant/AppAcademy/algorithm/cs/Fibonacci/obj/Debug/net5.0/Fibonacci.genruntimeconfig.cache
